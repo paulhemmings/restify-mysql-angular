@@ -1,0 +1,30 @@
+{
+  "name": "restify-mysql-angular",
+  "version": "1.0.0",
+  "description": "test restify/angular app using mysql for persistence",
+  "main": "restify-server.js",
+  "engines": {
+    "node": "0.12.0",
+    "npm": "2.7.0",
+    "bower": "1.4.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "angular",
+    "restify",
+    "mysql"
+  ],
+  "author": "paulhemmings",
+  "license": "MIT",
+  "devDependencies": {
+    "bower": "^1.5.3",
+    "grunt": "^0.4.5"
+  },
+  "dependencies": {
+    "mysql": "^2.9.0",
+    "restify": "^4.0.3",
+    "sequelize": "^3.11.0"
+  }
+}

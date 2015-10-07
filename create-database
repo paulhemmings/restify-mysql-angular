@@ -1,0 +1,13 @@
+CREATE SCHEMA `testDatabase` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin ;
+
+CREATE TABLE `testDatabase`.`user` (
+  `id` INT NOT NULL,
+  `fullName` VARCHAR(255) NULL,
+  PRIMARY KEY (`id`));
+
+CREATE USER 'testUser'@'localhost' IDENTIFIED BY 'testUser';
+GRANT ALL ON testDatabase.* TO 'testUser'@'localhost';
+
+ALTER TABLE `testDatabase`.`user`
+ADD COLUMN `createdAt` DATETIME NULL AFTER `fullName`,
+ADD COLUMN `updatedAt` DATETIME NULL AFTER `createdAt`;

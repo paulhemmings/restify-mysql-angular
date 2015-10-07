@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="MainApplicationModule">
+    <head>
+        <meta name="author" content="paulhemmings">
+        <title>Simple Angular app to display user data</title>
+        <!-- libs -->
+        <link href="lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    </head>
+    <body>
+        <!-- dynamic content -->
+        <div ui-view="content"></div>
+
+        <!-- App libs -->
+        <script src="lib/angular/angular.js"></script>
+        <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script src="lib/angular-animate/angular-animate.min.js"></script>
+        <script src="lib/angular-cookies/angular-cookies.min.js"></script>
+        <script src="lib/jquery/dist/jquery.min.js"></script>
+        <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="lib/ng-lodash/build/ng-lodash.min.js"></script>
+
+        <!-- application -->
+        <script src="app/app.js"></script>
+        <script src="app/controllers/home-controller.js"></script>
+        <script src="app/services/user-service.js"></script>
+
+        <!-- bootstrap responsive stuff -->
+        <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    </body>
+</html>
