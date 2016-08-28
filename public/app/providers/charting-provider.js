@@ -7,6 +7,12 @@ angular.module('MainApplicationModule')
     // create CSS element
 
     this.buildChartingElements = function($rootScope, $log, document) {
+        // load the CSS element
+        var mapElementStyle = document.createElement('link');
+        mapElementStyle.type = 'text/css';
+        mapElementStyle.href = 'styles/charting.css';
+        mapElementStyle.rel = "stylesheet"
+        document.getElementsByTagName('head')[0].appendChild(mapElementStyle);
         // load the charting JS element
         var chartElementSource = document.createElement('script');
         chartElementSource.type = 'text/javascript';
