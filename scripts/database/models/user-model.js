@@ -6,6 +6,10 @@ exports.initialize = function(sequelize, models) {
         name: {
           type: Sequelize.STRING,
           field: 'fullName'
+        },
+        age: {
+          type: Sequelize.INTEGER,
+          field: 'age'
         }
     }, {
         freezeTableName: true // Model tableName will be the same as the model name

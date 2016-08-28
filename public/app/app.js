@@ -1,4 +1,9 @@
+
+// define App module
+
 angular.module('MainApplicationModule', ['ui.router']);
+
+// Configure App module
 
 angular
     .module('MainApplicationModule')
@@ -16,3 +21,7 @@ angular
                   }
               });
     }])
+    .run( function($rootScope, ChartingProvider) {
+        // this will fire off the charting provider
+        // so it is *needed* even if it isn't actually used.
+    });

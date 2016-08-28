@@ -2,17 +2,33 @@
 
 angular
     .module('MainApplicationModule')
-    .controller('HomeController', ['$scope', 'userService',
-        function($scope, userService) {
+    .controller('HomeController', ['$scope', '$rootScope', 'ChartingService', 'userService',
+        function($scope, $rootScope, chartingService, userService) {
 
             $scope.users = [];
 
-            function loadUsers(response) {
-                $scope.users = response.data;
+            function displayUserChart(userData) {
+                $scope.users = userData;
+                var chartData = userData.map(function(row) {
+                    return {
+                        'name' : row.name,
+                        'value' : row.age
+                    }
+                })
+                chartingService.loadBarChart('mapContainer', chartData);
+            }
+
+
+            function usersLoaded(response) {
+                displayUserChart(response.data);
+            }
+
+            function onChartLoaded() {
+                userService.getUsers().then(usersLoaded);
             }
 
             function initialize() {
-                userService.getUsers().then(loadUsers);
+                $rootScope.$on('charting-event-loaded', onChartLoaded);
             }
 
             initialize();
