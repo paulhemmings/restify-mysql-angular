@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "mysql": "^2.9.0",
+    "node-salesforce": "^0.8.0",
     "restify": "^4.0.3",
     "sequelize": "^3.11.0"
   }
