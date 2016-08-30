@@ -4,15 +4,41 @@ angular
     .module('MainApplicationModule')
     .service('userService', function($http) {
 
-        function getUsers() {
+        function login(user) {
             return $http({
-                url: '/users',
+                url: '/user/login',
+                method: 'POST',
+                data: user
+            });
+        }
+
+        function create(user) {
+            return $http({
+                url: '/user',
+                method: 'POST',
+                data: user
+            });
+        }
+
+        function get() {
+            return $http({
+                url: '/user',
                 method: 'GET'
             });
         }
 
+        function all() {
+          return $http({
+              url: '/users',
+              method: 'GET'
+          });
+        }
+
         return {
-            getUsers: getUsers
+            login: login,
+            create: create,
+            get: get,
+            all: all
         };
 
     });

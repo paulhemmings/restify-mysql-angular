@@ -24,7 +24,7 @@ angular
             }
 
             function onChartLoaded() {
-                userService.getUsers().then(usersLoaded);
+                userService.all().then(usersLoaded);
             }
 
             function initialize() {

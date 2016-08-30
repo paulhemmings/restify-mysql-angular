@@ -1,6 +1,7 @@
 'use strict';
 
 var restify = require('restify'),
+    CookieParser = require('restify-cookies'),
     fs = require('fs');
 
 // instantiate the server
@@ -8,6 +9,7 @@ var restify = require('restify'),
 
 var server = restify.createServer();
 server.use(restify.bodyParser({ mapParams: false }));
+server.use(CookieParser.parse);
 
 // serve static content
 // http://mcavage.me/node-restify/#Server-API
@@ -35,7 +37,7 @@ var services = {};
 fs.readdirSync(modelsPath).forEach(function(file) {
   	console.log('load service ' + file);
     var service = require(modelsPath + '/' + file);
-    service.initialize(database);
+    // service.initialize(database);
     services[service.name] = service;
 });
 

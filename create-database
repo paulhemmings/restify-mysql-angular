@@ -1,9 +1,16 @@
 CREATE SCHEMA `testDatabase` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin ;
 
-CREATE TABLE `testDatabase`.`user` (
-  `id` INT NOT NULL,
-  `fullName` VARCHAR(255) NULL,
-  PRIMARY KEY (`id`));
+CREATE TABLE `UserRecord` (
+  `id` MEDIUMINT NOT NULL AUTO_INCREMENT,
+  `FullName` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `CreatedAt` datetime DEFAULT NULL,
+  `UpdatedAt` datetime DEFAULT NULL,
+  `Age` int(11) DEFAULT NULL,
+  `Username` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `Password` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `Seed` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE USER 'testUser'@'localhost' IDENTIFIED BY 'testUser';
 GRANT ALL ON testDatabase.* TO 'testUser'@'localhost';

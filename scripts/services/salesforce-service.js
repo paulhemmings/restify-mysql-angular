@@ -13,7 +13,7 @@
 
     exports.name = 'SalesforceService';
 
-    exports.initialize() {
+    exports.initialize = function() {
     };
 
     exports.login = function(username, password) {

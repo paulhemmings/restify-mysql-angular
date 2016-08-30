@@ -6,7 +6,7 @@ exports.initialize = function(server, services) {
 
     var salesforceService = services.SalesforceService;
 
-    server.get('/login', function(req, res, next) {
+    server.get('authenticate/login', function(req, res, next) {
         salesforceService.login(req.username, req.password).then(function(userInfo) {
             res.send(200, userInfo);
             next();

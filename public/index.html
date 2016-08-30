@@ -5,10 +5,24 @@
         <title>Simple Angular app to display user data</title>
         <!-- libs -->
         <link href="lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+        <link href="styles/global.css" rel="stylesheet">
+        <link href="styles/navigation.css" rel="stylesheet">
     </head>
     <body>
-        <!-- dynamic content -->
-        <div ui-view="content"></div>
+        <div class="navigation-masthead">
+            <div class="container">
+                <nav class="navigation" ui-view="navigation"></nav>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 blog-main">
+                    <!-- dynamic content -->
+                    <div ui-view="content"></div>
+                </div>
+            </div>
+        </div>
 
         <!-- App libs -->
         <script src="lib/angular/angular.js"></script>
@@ -21,10 +35,15 @@
 
         <!-- application -->
         <script src="app/app.js"></script>
-        <!-- data related -->
+        <!-- home -->
         <script src="app/controllers/home-controller.js"></script>
+        <script src="app/controllers/navigation-controller.js"></script>
+        <!-- personalization -->
+
+        <script src="app/controllers/login-controller.js"></script>
         <script src="app/services/user-service.js"></script>
-        <!-- chart related -->
+        <script src="app/factories/user-manager.js"></script>
+        <!-- charting -->
         <script src="app/services/charting-service.js"></script>
         <script src="app/providers/charting-provider.js"></script>
         <script src="app/factories/charting-factory.js"></script>

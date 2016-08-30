@@ -1,0 +1,49 @@
+<style>
+
+.option-container {
+  margin: 0 auto 5em;
+}
+.field_container {
+    margin: 0 auto 0.3em;
+    text-align: left;
+    width: auto;
+}
+.field_container:last-child {
+  margin-bottom: 0
+}
+</style>
+
+<h4>Login</h4>
+
+<div class="option-container">
+  <div class="field_container">
+    <input type="text" ng-model="user.username" placeholder="Email Address">
+  </div>
+
+  <div class="field_container">
+    <input type="Password" ng-model="user.password" placeholder="Password">
+    <button id="sign_in_button" ng-click="login(user)">
+      <span class="button_text">Sign In</span>
+    </button>
+  </div>
+  <div class="error-message">{{error}}</div>
+</div>
+
+<h4>Or, create an account</h4>
+
+<div class="option-container">
+  <div class="field_container">
+    <input type="text" ng-model="newUser.name" placeholder="Name">
+  </div>
+
+  <div class="field_container">
+    <input type="text" ng-model="newUser.username" placeholder="Email Address">
+  </div>
+
+  <div class="field_container">
+    <input type="Password" ng-model="newUser.password" placeholder="Password">
+    <button id="sign_in_button" ng-click="create(newUser)">
+      <span class="button_text">Create account</span>
+    </button>
+  </div>
+</div>

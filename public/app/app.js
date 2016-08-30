@@ -11,9 +11,26 @@ angular
         function($stateProvider, $urlRouterProvider) {
           $urlRouterProvider.otherwise('/home');
           $stateProvider
+              .state('logging-in', {
+                  url:'/login',
+                  views: {
+                      'navigation': {
+                          templateUrl: '/app/partials/navigation.html',
+                          controller: 'NavigationController'
+                      },
+                      'content': {
+                          templateUrl: '/app/partials/login.html',
+                          controller: 'LoginController'
+                      }
+                  }
+              })
               .state('home', {
                   url:'/home',
                   views: {
+                      'navigation': {
+                          templateUrl: '/app/partials/navigation.html',
+                          controller: 'NavigationController'
+                      },                      
                       'content': {
                           templateUrl: '/app/partials/home.html',
                           controller: 'HomeController'
