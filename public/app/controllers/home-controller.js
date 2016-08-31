@@ -2,8 +2,8 @@
 
 angular
     .module('MainApplicationModule')
-    .controller('HomeController', ['$scope', '$rootScope', '$location', 'userManager',
-        function($scope, $rootScope, $location, userManager) {
+    .controller('HomeController', ['$scope', '$rootScope', '$location', 'userService',
+        function($scope, $rootScope, $location, userService) {
 
             $scope.users = [];
 
@@ -16,7 +16,7 @@ angular
             }
 
             function initialize() {
-                userManager.authenticateUser().then(handleAuthenticated, handleNotAuthenticated);
+                userService.authenticateUser().then(handleAuthenticated, handleNotAuthenticated);
             }
 
             initialize();

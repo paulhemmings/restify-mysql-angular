@@ -35,10 +35,10 @@ angular
         }
 
         return {
-            login: login,
-            create: create,
-            get: get,
-            all: all
+            loadUsers : all,
+            authenticateUser: get,
+            registerUser: create,
+            login: login
         };
 
     });

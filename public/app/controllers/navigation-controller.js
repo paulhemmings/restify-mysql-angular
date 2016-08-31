@@ -2,8 +2,8 @@
 
 angular
     .module('MainApplicationModule')
-    .controller('NavigationController', ['$scope', '$rootScope', '$location', 'userManager',
-        function($scope, $rootScope, $location, userManager) {
+    .controller('NavigationController', ['$scope', '$rootScope', '$location', 'userService',
+        function($scope, $rootScope, $location, userService) {
 
             $scope.options = [];
             $scope.isSelected = isSelected;
@@ -11,7 +11,7 @@ angular
             function buildOptions(authenticated) {
                 $scope.options.length = 0;
                 $scope.options.push({ key:"Home", url:"#/welcome", selected : false });
-                if (userManager.isAuthenticated()) {
+                if (authenticated) {
                   $scope.options.push({ key:"Logout", url:"#/logout", selected : false });
                 } else {
                   $scope.options.push({ key:"Login", url:"#/login", selected : false });
@@ -22,8 +22,16 @@ angular
                 return (document.URL.indexOf(option.url) > 0);
             }
 
+            function handleNotAuthenticated() {
+                return buildOptions(false);
+            }
+
+            function handleAuthenticated() {
+                return buildOptions(true);
+            }
+
             function initialize() {
-              userManager.authenticateUser().then(buildOptions);
+                userService.authenticateUser().then(handleAuthenticated, handleNotAuthenticated);
             }
 
             initialize();

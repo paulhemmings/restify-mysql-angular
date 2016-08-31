@@ -2,8 +2,8 @@
 
 angular
     .module('MainApplicationModule')
-    .controller('LogoutController', ['$scope', '$rootScope', '$location', 'userManager', '$cookies',
-        function($scope, $rootScope, $location, userManager, $cookies) {
+    .controller('LogoutController', ['$scope', '$rootScope', '$location', '$cookies',
+        function($scope, $rootScope, $location, $cookies) {
 
             $scope.logout = logout;
 
@@ -11,7 +11,7 @@ angular
                 // delete the cookie.
                 delete $cookies.AuthenticationToken;
                 // redirect to home page
-                $location.path('/welcome');
+                $location.path('/home');
             }
 
             function initialize() {

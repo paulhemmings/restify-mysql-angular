@@ -2,8 +2,8 @@
 
 angular
     .module('MainApplicationModule')
-    .controller('ChartController', ['$scope', '$rootScope', 'ChartingService', 'userManager',
-        function($scope, $rootScope, chartingService, userManager) {
+    .controller('ChartController', ['$scope', '$rootScope', 'ChartingService', 'userService',
+        function($scope, $rootScope, chartingService, userService) {
 
             $scope.users = [];
 
@@ -22,16 +22,16 @@ angular
                 displayUserChart(response.data);
             }
 
-            function handleAuthentication() {
-                if (userManager.isAuthenticated()) {
-                    userManager.loadUsers().then(usersLoaded);
-                } else {
-                    $location.path('/login');
-                }
+            function handleNotAuthenticated() {
+                $location.path('/login');
+            }
+
+            function handleAuthenticated() {
+                userService.loadUsers().then(usersLoaded);
             }
 
             function initialize() {
-                userManager.authenticateUser().then(handleAuthentication);
+                userService.authenticateUser().then(handleAuthenticated, handleNotAuthenticated);
             }
 
             initialize();
