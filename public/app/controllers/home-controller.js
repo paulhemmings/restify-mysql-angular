@@ -8,8 +8,8 @@ angular
             $scope.users = [];
 
             function displayUserChart(userData) {
-                $scope.users = userData;
-                var chartData = userData.map(function(row) {
+                $scope.users = userData.users;
+                var chartData = userData.users.map(function(row) {
                     return {
                         'name' : row.name,
                         'value' : row.age

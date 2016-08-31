@@ -60,11 +60,17 @@
     exports.persist = function(cryptoService, model) {
         var promise = new Promise();
 
+        // check if existing
+
         if (model._id) {
             promise.reject ('cannot yet edit existing user');
             return promise;
         }
 
+        // emcrypt the password
+        model.password = cryptoService.encrypt(model.password);
+
+        // persist
         database.models.User.create(model).then(function(jane) {
             promise.resolve(jane.get({
                 plain: true
