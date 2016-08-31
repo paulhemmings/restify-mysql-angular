@@ -21,10 +21,10 @@ angular
           var deferred = $q.defer();
           userService.all().then(function(response) {
               manager.users = response.data.users;
-              deferred.resolve();
+              deferred.resolve(response);
           }, function(error) {
               manager.users.length = 0;
-              deferred.resolve();
+              deferred.reject();
           });
           return deferred.promise;
       };
@@ -36,7 +36,7 @@ angular
               deferred.resolve();
           }, function(error) {
               manager.authenticated = null;
-              deferred.resolve();
+              deferred.reject();
           });
           return deferred.promise;
       };

@@ -2,6 +2,7 @@
 
 angular.module('MainApplicationModule')
     .provider('ChartingProvider', function () {
+        
     this._initialized = false;
 
     // create CSS element

@@ -1,7 +1,7 @@
 
 // define App module
 
-angular.module('MainApplicationModule', ['ui.router']);
+angular.module('MainApplicationModule', ['ui.router', 'ngCookies']);
 
 // Configure App module
 
@@ -11,6 +11,19 @@ angular
         function($stateProvider, $urlRouterProvider) {
           $urlRouterProvider.otherwise('/home');
           $stateProvider
+              .state('charting', {
+                  url:'/chart',
+                  views: {
+                      'navigation': {
+                          templateUrl: '/app/partials/navigation.html',
+                          controller: 'NavigationController'
+                      },
+                      'content': {
+                          templateUrl: '/app/partials/chart.html',
+                          controller: 'ChartController'
+                      }
+                  }
+              })
               .state('logging-in', {
                   url:'/login',
                   views: {
@@ -24,13 +37,26 @@ angular
                       }
                   }
               })
+              .state('logging-out', {
+                  url:'/logout',
+                  views: {
+                      'navigation': {
+                          templateUrl: '/app/partials/navigation.html',
+                          controller: 'NavigationController'
+                      },
+                      'content': {
+                          templateUrl: '/app/partials/logout.html',
+                          controller: 'LogoutController'
+                      }
+                  }
+              })
               .state('home', {
                   url:'/home',
                   views: {
                       'navigation': {
                           templateUrl: '/app/partials/navigation.html',
                           controller: 'NavigationController'
-                      },                      
+                      },
                       'content': {
                           templateUrl: '/app/partials/home.html',
                           controller: 'HomeController'

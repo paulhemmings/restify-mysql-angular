@@ -10,7 +10,7 @@ angular
 
             function login(user) {
                 userService.login(user).then(function(response) {
-                    $location.path('/blogger');
+                    $location.path('/chart');
                 }, function(error) {
                     $scope.error = error.error;
                 });
@@ -18,7 +18,7 @@ angular
 
             function create(user) {
                 userService.create(user).then(function() {
-                  $location.path('/blogger');
+                  $location.path('/chart');
                 }, function(error) {
                     $scope.error = error.error;
                 });

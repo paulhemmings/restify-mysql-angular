@@ -29,9 +29,6 @@
          }).then(function(users) {
 
             console.log('returned user ' + JSON.stringify(users));
-            if (err) {
-                return promise.reject (err.error);
-          	}
 
              if (!users || users.length === 0) {
                  return promise.reject ('no user found');
