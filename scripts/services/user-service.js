@@ -64,9 +64,11 @@
             return promise;
         }
 
-        // emcrypt the password
-        model.password = cryptoService.encrypt(model.password);
-
+        // encrypt the password (if local and not via remote authentication)
+        if (model.password) {
+            model.password = cryptoService.encrypt(model.password);
+        }
+        
         // persist
         database.models.User.create(model).then(function(jane) {
             promise.resolve(jane.get({

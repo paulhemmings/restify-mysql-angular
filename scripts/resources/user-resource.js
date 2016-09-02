@@ -11,9 +11,10 @@ exports.initialize = function(server, services) {
       salesforceService = services.SalesforceService;
 
 
-  server.get('user/authenticate', function(req, res, next) {
-      salesforceService.login(req.username, req.password).then(function(userInfo) {
-          res.send(200, userInfo);
+  server.post('user/authenticate', function(req, res, next) {
+      salesforceService.login(req.body.username, req.body.password, req.body.securityToken).then(function(userInfo) {
+          authService.authenticateResponse(res, userInfo, cookieService, cryptoService);
+          res.send(200, { 'username' : userInfo.username });
           next();
       }, function(error) {
           res.send(301, { 'error': error});
@@ -27,7 +28,7 @@ exports.initialize = function(server, services) {
 
   server.post('/user/login', function(req, res, next) {
     userService.login(cryptoService, req.body.username, req.body.password).then(function(user) {
-        authService.authenticateResponse(res, user, cookieService, cryptoService);
+        authService.authenticateResponse(res, { 'username' : user.username }, cookieService, cryptoService);
         res.send(200, { 'username' : user.username });
         next();
     }, function(error) {
@@ -43,11 +44,11 @@ exports.initialize = function(server, services) {
 
   server.post('/user', function(req, res, next) {
     userService.persist(cryptoService, req.body).then(function(user) {
-        authService.authenticateResponse(res, user, cookieService, cryptoService);
+        authService.authenticateResponse(res, { 'username' : user.username }, cookieService, cryptoService);
         res.send(200, { 'username' : user.username });
         next();
     }, function(error) {
-        res.send(401, { 'error': error});
+        res.send(401, { 'error: ': error});
         next();
     });
   });
@@ -58,13 +59,14 @@ exports.initialize = function(server, services) {
             return {
                 name : user.name,
                 username : user.username,
-                age : user.age
+                age : user.age,
+                password : 'hidden'
             };
         })
       });
       next();
     }, function(error) {
-      res.send(301, { 'error': error});
+      res.send(301, { 'error: ': error});
       next();
     });
   });
@@ -73,15 +75,22 @@ exports.initialize = function(server, services) {
 
   server.get('/user', function(req, res, next) {
       authService.authenticateRequest(req, cookieService, cryptoService).then(function(token) {
+          // remote
+          if (token.accessToken && token.accessToken.length > 0) {
+              res.send(200, { 'username' : token.username });
+              next();
+              return;
+          }
+          // local
           userService.find({'username' : token.username}).then(function(user) {
             res.send(200, { 'username' : user.username });
             next();
           }, function(error) {
-              res.send(401, { 'error': 'invalid user:' + error});
+              res.send(401, { 'error': 'invalid user: ' + error});
               next();
           });
       }, function(error) {
-          res.send(401, { 'error': 'invalid token:' + error});
+          res.send(401, { 'error': 'invalid token: ' + error});
           next();
       });
   });

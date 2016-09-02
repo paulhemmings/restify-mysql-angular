@@ -2,11 +2,14 @@
 <html ng-app="MainApplicationModule">
     <head>
         <meta name="author" content="paulhemmings">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Simple Angular app to display user data</title>
         <!-- libs -->
-        <link href="lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+        <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="lib/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
         <link href="styles/global.css" rel="stylesheet">
         <link href="styles/navigation.css" rel="stylesheet">
+
     </head>
     <body>
         <div class="navigation-masthead">
@@ -17,7 +20,13 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-sm-8 blog-main">
+                &nbsp;
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
                     <!-- dynamic content -->
                     <div ui-view="content"></div>
                 </div>
@@ -42,6 +51,8 @@
         <script src="app/controllers/login-controller.js"></script>
         <script src="app/controllers/logout-controller.js"></script>
         <script src="app/services/user-service.js"></script>
+        <!-- querying data -->
+        <script src="app/services/query-service.js"></script>
         <!-- charting -->
         <script src="app/controllers/chart-controller.js"></script>
         <script src="app/services/charting-service.js"></script>

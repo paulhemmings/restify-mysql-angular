@@ -19,7 +19,7 @@
   }
 
   function generateToken(cryptoService, user) {
-      return cryptoService.encrypt(JSON.stringify({ 'username' : user.username }));
+      return cryptoService.encrypt(JSON.stringify(user));
   }
 
   /*

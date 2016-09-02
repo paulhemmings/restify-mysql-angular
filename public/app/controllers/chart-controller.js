@@ -2,12 +2,14 @@
 
 angular
     .module('MainApplicationModule')
-    .controller('ChartController', ['$scope', '$rootScope', 'ChartingService', 'userService',
-        function($scope, $rootScope, chartingService, userService) {
+    .controller('ChartController', ['$scope', '$rootScope', '$location', 'ChartingService', 'userService', 'queryService',
+        function($scope, $rootScope, $location, chartingService, userService, queryService) {
 
             $scope.users = [];
 
-            function displayUserChart(userData) {
+            function displayChart(queryData) {
+                consooe.log(JSON.stringify(queryData));
+                /*
                 $scope.users = userData.users;
                 var chartData = userData.users.map(function(row) {
                     return {
@@ -16,10 +18,11 @@ angular
                     }
                 })
                 chartingService.loadBarChart('mapContainer', chartData);
+                */
             }
 
-            function usersLoaded(response) {
-                displayUserChart(response.data);
+            function handleQueryResponse(response) {
+                displayChart(response.data);
             }
 
             function handleNotAuthenticated() {
@@ -27,7 +30,9 @@ angular
             }
 
             function handleAuthenticated() {
-                userService.loadUsers().then(usersLoaded);
+                queryService.query({
+                    query : 'SELECT ID FROM ACCOUNT LIMIT 1'
+                }).then(handleQueryResponse);
             }
 
             function initialize() {

@@ -4,9 +4,9 @@ angular
     .module('MainApplicationModule')
     .service('userService', function($http) {
 
-        function login(user) {
+        function login(user, local) {
             return $http({
-                url: '/user/login',
+                url: (local || true) ? '/user/authenticate' : '/user/login',
                 method: 'POST',
                 data: user
             });

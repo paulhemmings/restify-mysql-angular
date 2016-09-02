@@ -6,7 +6,16 @@ angular
         function($scope, $location, userService) {
 
             $scope.login = login;
+            $scope.authenticate = authenticate;
             $scope.create = create;
+
+            function authenticate(user) {
+                userService.authenticate(user).then(function(response) {
+                    $location.path('/chart');
+                }, function(error) {
+                    $scope.error = error.error;
+                });
+            }
 
             function login(user) {
                 userService.login(user).then(function(response) {
