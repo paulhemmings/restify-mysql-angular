@@ -24,7 +24,34 @@
     exports.initialize = function() {
     };
 
+    // {
+    //   "totalSize":40690,"done":false,"nextRecordsUrl":"/services/data/v29.0/query/01g4B00000EqFW6QAN-2000",
+    //   "records":[
+    //     {
+    //       "attributes":
+    //       {
+    //          "type":"Account","url":"/services/data/v29.0/sobjects/Account/0014B000006il6dQAA"
+    //       },
+    //       "Id":"0014B000006il6dQAA",
+    //       "Name":"John Smith"
+    //     }
+    //   ]
+    // }
+
     exports.query = function(token, query) {
+        var promise = new Promise();
+        var records = [];
+        conn.query("SELECT Id, Name, Total_Lifetime_Value__pc FROM Account LIMIT 100", function(err, result) {
+            if (err) {
+                promise.reject ('invalid query: ' + err);
+                return promise;
+            }
+            // console.log("total : " + result.totalSize);
+            // console.log("fetched : " + result.records.length);
+            promise.resolve (result);
+        });
+        return promise;
+
         var query = {
             credentials : buildSessionInfo(token.accessToken, token.instanceUrl),
             SOSQL: query

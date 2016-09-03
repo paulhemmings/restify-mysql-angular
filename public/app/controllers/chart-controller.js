@@ -8,17 +8,13 @@ angular
             $scope.users = [];
 
             function displayChart(queryData) {
-                consooe.log(JSON.stringify(queryData));
-                /*
-                $scope.users = userData.users;
-                var chartData = userData.users.map(function(row) {
+                var chartData = queryData.records.map(function(row) {
                     return {
-                        'name' : row.name,
-                        'value' : row.age
+                        'name' : row.Name,
+                        'value' : row.Total_Lifetime_Value__pc
                     }
                 })
                 chartingService.loadBarChart('mapContainer', chartData);
-                */
             }
 
             function handleQueryResponse(response) {
