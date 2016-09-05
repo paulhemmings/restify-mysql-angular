@@ -22,14 +22,14 @@
 
   <div class="field_container">
     <input type="Password" ng-model="user.password" placeholder="Password">
-    <button id="sign_in_button" ng-click="login(user)">
+    <button id="sign_in_button" ng-click="login(user, true)">
       <span class="button_text">Sign In</span>
     </button>
   </div>
 
   <div class="field_container">
     <input type="Password" ng-model="user.securityToken" placeholder="Security Token">
-    <button id="sign_in_button" ng-click="login(user, false)">
+    <button id="authenticate_button" ng-click="login(user, false)">
       <span class="button_text">Authenticate</span>
     </button>
   </div>
