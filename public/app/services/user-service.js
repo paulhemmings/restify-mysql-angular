@@ -6,7 +6,7 @@ angular
 
         function login(user, local) {
             return $http({
-                url: (local || true) ? '/user/login' : '/user/authenticate',
+                url: local ? '/user/login' : '/user/authenticate',
                 method: 'POST',
                 data: user
             });

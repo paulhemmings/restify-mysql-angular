@@ -38,10 +38,10 @@
     //   ]
     // }
 
-    exports.query = function(token, query) {
+    exports.query = function(token, soql) {
         var promise = new Promise();
         var records = [];
-        conn.query("SELECT Id, Name, Total_Lifetime_Value__pc FROM Account LIMIT 100", function(err, result) {
+        conn.query(soql, function(err, result) {
             if (err) {
                 promise.reject ('invalid query: ' + err);
                 return promise;

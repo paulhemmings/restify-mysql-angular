@@ -41,8 +41,10 @@ angular
             }
 
             function handleQueryResponse(response) {
-                $scope.records = response.records;
-                displayChart(response.data);
+                $scope.records = response.data.records;
+                if ($scope.records && $scope.records.length > 0) {
+                    $scope.recordKeys = Object.keys($scope.records[0]);
+                }
             }
             function handleTestResponse() {
                 $scope.records = [
