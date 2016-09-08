@@ -2,14 +2,14 @@
 <html ng-app="MainApplicationModule">
     <head>
         <meta name="author" content="paulhemmings">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Simple Angular app to display user data</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- libs -->
         <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="lib/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
         <link href="styles/global.css" rel="stylesheet">
         <link href="styles/navigation.css" rel="stylesheet">
-
     </head>
     <body>
         <div class="navigation-masthead">
@@ -24,11 +24,9 @@
             </div>
         </div>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-8">
+        <div ui-view="content"></div>
                     <!-- dynamic content -->
-                    <div ui-view="content"></div>
+
                 </div>
             </div>
         </div>
@@ -38,7 +36,6 @@
         <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
         <script src="lib/angular-animate/angular-animate.min.js"></script>
         <script src="lib/angular-cookies/angular-cookies.min.js"></script>
-        <script src="lib/jquery/dist/jquery.min.js"></script>
         <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="lib/ng-lodash/build/ng-lodash.min.js"></script>
 
@@ -60,9 +57,9 @@
         <script src="app/factories/charting-factory.js"></script>
         <!-- ui -->
         <script src="app/directives/auto-size.js"></script>
-        
-        <!-- bootstrap responsive stuff -->
-        <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- cdn -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     </body>
 </html>

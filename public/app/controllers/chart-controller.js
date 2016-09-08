@@ -9,12 +9,32 @@ angular
             $scope.query = querySoql;
             $scope.records = [];
             $scope.recordKeys = [];
+            $scope.selectKey = selectKey;
+            $scope.selectedKeys = [];
+            $scope.isKeySelected = isKeySelected;
 
-            function displayChart(queryData) {
-                var chartData = queryData.records.map(function(row) {
+            function isKeySelected(key) {
+                return $scope.selectedKeys.indexOf(key) !== -1;
+            }
+
+            function selectKey(key) {
+                var index = $scope.selectedKeys.indexOf(key);
+                if (index === -1) {
+                    $scope.selectedKeys.push(key);
+                } else {
+                    $scope.selectedKeys.splice(index, 1);
+                }
+                if ($scope.selectedKeys.length == 2) {
+                    displayChart($scope.records, $scope.selectedKeys);
+                }
+                return !(index === -1);
+            }
+
+            function displayChart(queryData, queryKeys) {
+                var chartData = queryData.map(function(row) {
                     return {
-                        'name' : row.Name,
-                        'value' : row.Total_Lifetime_Value__pc
+                        'name' : row[queryKeys[0]],
+                        'value' : row[queryKeys[1]],
                     }
                 })
                 chartingService.loadBarChart('mapContainer', chartData);
