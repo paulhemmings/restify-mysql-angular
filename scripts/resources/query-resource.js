@@ -10,9 +10,10 @@ exports.initialize = function(server, services) {
         cryptoService = services.CryptoService,
         salesforceService = services.SalesforceService;
 
-    server.get('/query', function(req, res, next) {
+    server.post('/query', function(req, res, next) {
       authService.authenticateRequest(req, cookieService, cryptoService).then(function(token) {
-          salesforceService.query(token, req.query).then(function(response) {
+          console.log('query Sf: ' + req.body.soql);
+          salesforceService.query(token, req.body.soql).then(function(response) {
             res.send(200, response);
             next();
           }, function(error) {

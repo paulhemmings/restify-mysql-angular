@@ -62,9 +62,7 @@ angular
             }
 
             function querySoql(soql) {
-                queryService.query({
-                    query : soql
-                }).then(handleQueryResponse, handleTestResponse);
+                queryService.query(soql).then(handleQueryResponse, handleTestResponse);
             }
 
             function handleNotAuthenticated() {
