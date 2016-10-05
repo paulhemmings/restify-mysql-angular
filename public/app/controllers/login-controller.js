@@ -2,8 +2,8 @@
 
 angular
     .module('MainApplicationModule')
-    .controller('LoginController', ['$scope', '$location', 'userService',
-        function($scope, $location, userService) {
+    .controller('LoginController', ['$scope', '$rootScope', '$location', 'userService', 'FacebookFactory',
+        function($scope, $rootScope, $location, userService, FacebookFactory) {
 
             $scope.login = login;
             $scope.create = create;
@@ -25,7 +25,16 @@ angular
             }
 
             function initialize() {
-                // none required
+                $rootScope.$on('facebook-sdk-event-loaded', function() {
+                    FacebookFactory().getLoginStatus(function(response) {
+                      if (response.status === 'connected') {
+                        console.log('Logged in.');
+                      }
+                      else {
+                        FacebookFactory().login();
+                      }
+                    });
+                });
             }
 
             initialize();

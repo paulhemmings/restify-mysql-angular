@@ -64,7 +64,7 @@ angular
                   }
               });
     }])
-    .run( function($rootScope, ChartingProvider) {
+    .run( function($rootScope, ChartingProvider, FacebookAuthenticationProvider) {
         // this will fire off the charting provider
         // so it is *needed* even if it isn't actually used.
     });
