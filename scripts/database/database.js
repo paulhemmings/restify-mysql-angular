@@ -29,3 +29,7 @@ fs.readdirSync(modelsPath).forEach(function(file) {
 // export models
 
 exports.models = models;
+
+// export  Sequelize for raw queries only
+
+exports.sequelize = sequelize;

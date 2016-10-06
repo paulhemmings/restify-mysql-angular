@@ -6,6 +6,9 @@
 
   exports.name = 'AuthenticationService';
 
+  exports.initialize = function() {
+  };
+
   /*
    * Validate token
    */

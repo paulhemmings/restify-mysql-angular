@@ -13,6 +13,9 @@ var crypto = require('crypto'),
 
 exports.name = 'CryptoService';
 
+exports.initialize = function() {
+};
+
 exports.encrypt = function(text) {
   var cipher = crypto.createCipher(algorithm, password);
   var crypted = cipher.update(text,'utf8','hex');

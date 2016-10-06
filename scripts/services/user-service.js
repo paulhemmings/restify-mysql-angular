@@ -4,9 +4,12 @@
 
     exports.name = 'UserService';
 
+    exports.initialize = function() {
+    };
+
     var Promise = require('node-promise').Promise,
-        curry = require('curry'),
-        database = require( __dirname + '/../database/database');
+        curry = require('curry');
+        // database = require( __dirname + '/../database/database');
 
     var handler = curry(function(promise, err, response) {
         if(err) {
@@ -21,10 +24,10 @@
      * Return that user object
      */
 
-     function findUser (filter) {
+     function findUser (databaseService, filter) {
          console.log('find user ' + JSON.stringify(filter));
          var promise = new Promise();
-       	 database.models.User.findAll({
+       	 databaseService.models.User.findAll({
              where : filter
          }).then(function(users) {
 
@@ -43,15 +46,15 @@
 
     exports.find = findUser;
 
-    exports.login = function(cryptoService, username, password) {
+    exports.login = function(databaseService, cryptoService, username, password) {
       return findUser({
           'username': username,
           'password': cryptoService.encrypt(password)
         });
     };
 
-    exports.all = function() {
-      	return database.models.User.findAll();
+    exports.all = function(databaseService) {
+      	return databaseService.models.User.findAll();
     };
 
     exports.persist = function(cryptoService, model) {
@@ -68,9 +71,9 @@
         if (model.password) {
             model.password = cryptoService.encrypt(model.password);
         }
-        
+
         // persist
-        database.models.User.create(model).then(function(jane) {
+        databaseService.models.User.create(model).then(function(jane) {
             promise.resolve(jane.get({
                 plain: true
             }));

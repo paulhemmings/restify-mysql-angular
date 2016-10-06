@@ -9,10 +9,10 @@ angular
             $scope.isSelected = isSelected;
             $scope.userName = '';
 
-            function buildOptions(username) {
+            function buildOptions() {
                 $scope.options.length = 0;
                 $scope.options.push({ key:"Home", url:"#/welcome", selected : false });
-                if ($scope.userName.length > 0) {
+                if ($scope.authenticatedUser.username) {
                   $scope.options.push({ key:"Logout", url:"#/logout", selected : false });
                 } else {
                   $scope.options.push({ key:"Login", url:"#/login", selected : false });
@@ -24,12 +24,12 @@ angular
             }
 
             function handleNotAuthenticated() {
-                $scope.userName = '';
+                $scope.authenticatedUser = {};
                 return buildOptions();
             }
 
             function handleAuthenticated(response) {
-                $scope.userName = response.data.username || '';
+                $scope.authenticatedUser = response.data || {};
                 return buildOptions();
             }
 
