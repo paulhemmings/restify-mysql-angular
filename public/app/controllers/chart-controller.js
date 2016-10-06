@@ -60,23 +60,20 @@ angular
                     $scope.chartData.length = 0;
                 }
             }
-            function handleTestResponse() {
+            
+            function handleErrorResponse(response) {
                 $scope.records = [
                     {
-                        "attributes": {
-                            "type":"Account","url":"/services/data/v29.0/sobjects/Account/0014B000006il6dQAA"
-                        },
-                        "Id":"0014B000006il6dQAA",
-                        "Name":"John Smith"
+                        "error": response.data.error
                     }
                 ];
-                if ($scope.records && $scope.records.length > 0) {
-                    $scope.recordKeys = Object.keys($scope.records[0]);
-                }
+                $scope.recordKeys = Object.keys($scope.records[0]);
+                $scope.selectedKeys.length = 0;
+                $scope.chartData.length = 0;
             }
 
             function querySoql(soql) {
-                queryService.query(soql).then(handleQueryResponse, handleTestResponse);
+                queryService.query(soql).then(handleQueryResponse, handleErrorResponse);
             }
 
             function handleNotAuthenticated() {
