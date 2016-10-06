@@ -8,6 +8,10 @@ angular
             $rootScope.$broadcast('charting-event-ready');
         },
 
+        this.emptyChart = function() {
+            ChartingFactory().selectAll("svg > *").remove();
+        }
+
         this.loadBarChart = function(containerId, data) {
             // get the charting object
             var id3 = ChartingFactory();

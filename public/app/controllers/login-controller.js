@@ -26,6 +26,7 @@ angular
 
             function initialize() {
                 $rootScope.$on('facebook-sdk-event-loaded', function() {
+                    /*
                     FacebookFactory().getLoginStatus(function(response) {
                       if (response.status === 'connected') {
                         console.log('Logged in.');
@@ -34,6 +35,7 @@ angular
                         FacebookFactory().login();
                       }
                     });
+                    */
                 });
             }
 

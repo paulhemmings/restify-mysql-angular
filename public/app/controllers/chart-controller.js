@@ -11,40 +11,53 @@ angular
             $scope.recordKeys = [];
             $scope.selectKey = selectKey;
             $scope.selectedKeys = [];
+            $scope.chartData = [];
             $scope.isKeySelected = isKeySelected;
+            $scope.isChartPopulated = isChartPopulated;
+
+
 
             function isKeySelected(key) {
                 return $scope.selectedKeys.indexOf(key) !== -1;
             }
 
+            function isChartPopulated() {
+                return $scope.chartData && $scope.chartData.length > 0;
+            }
+
             function selectKey(key) {
                 var index = $scope.selectedKeys.indexOf(key);
                 if (index === -1) {
+                    $scope.chartData.length = 0;
                     $scope.selectedKeys.push(key);
                 } else {
+                    $scope.chartData.length = 0;
                     $scope.selectedKeys.splice(index, 1);
                 }
                 if ($scope.selectedKeys.length == 2) {
-                    displayChart($scope.records, $scope.selectedKeys);
+                    $scope.chartData = buildChartData($scope.records, $scope.selectedKeys);
+                    chartingService.emptyChart();
+                    chartingService.loadBarChart('mapContainer', $scope.chartData);
                 }
                 return !(index === -1);
             }
 
-            function displayChart(queryData, queryKeys) {
-                var chartData = queryData.map(function(row) {
+            function buildChartData(queryData, queryKeys) {
+                return queryData.map(function(row) {
                     return {
                         'name' : row[queryKeys[0]],
                         'value' : row[queryKeys[1]],
                     }
-                })
-                chartingService.loadBarChart('mapContainer', chartData);
+                });
             }
 
             function handleQueryResponse(response) {
                 $scope.records = response.data.records;
                 if ($scope.records && $scope.records.length > 0) {
                     $scope.recordKeys = Object.keys($scope.records[0]);
+                    $scope.recordKeys.splice($scope.recordKeys.indexOf('attributes'), 1);
                     $scope.selectedKeys.length = 0;
+                    $scope.chartData.length = 0;
                 }
             }
             function handleTestResponse() {
