@@ -4,11 +4,14 @@ angular
     .module('MainApplicationModule')
     .service('queryService', function($http) {
 
-        function query(soql) {
+        function query(target, soql) {
             return $http({
                 url: '/query',
                 method: 'POST',
-                data: { 'soql' : soql }
+                data: {
+                  'target' : target,
+                  'soql' : soql
+                }
             });
         }
 

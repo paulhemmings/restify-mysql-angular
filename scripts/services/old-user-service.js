@@ -1,6 +1,6 @@
 'use strict';
 
-exports.name = 'DatabaseService';
+exports.name = 'OldUserService';
 
 exports.initialize = function(database) {
     exports.all = function(user) {

@@ -17,7 +17,7 @@ angular
             }
 
             function create(user) {
-                userService.create(user).then(function() {
+                userService.registerUser(user).then(function() {
                   $location.path('/chart');
                 }, function(error) {
                     $scope.error = error.error;

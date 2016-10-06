@@ -14,7 +14,7 @@ exports.initialize = function(server, services) {
   server.post('user/authenticate', function(req, res, next) {
       salesforceService.login(req.body.username, req.body.password, req.body.securityToken).then(function(userInfo) {
           authService.authenticateResponse(res, userInfo, cookieService, cryptoService);
-          res.send(200, { 'username' : userInfo.username });
+          res.send(200, { 'username' : userInfo.username, 'authenticatedBy' : 'remote' });
           next();
       }, function(error) {
           res.send(301, { 'error': error});
@@ -29,7 +29,7 @@ exports.initialize = function(server, services) {
   server.post('/user/login', function(req, res, next) {
     userService.login(cryptoService, req.body.username, req.body.password).then(function(user) {
         authService.authenticateResponse(res, { 'username' : user.username }, cookieService, cryptoService);
-        res.send(200, { 'username' : user.username });
+        res.send(200, { 'username' : user.username, 'authenticatedBy' : 'local' });
         next();
     }, function(error) {
         res.send(401, { 'error': error});
@@ -77,13 +77,13 @@ exports.initialize = function(server, services) {
       authService.authenticateRequest(req, cookieService, cryptoService).then(function(token) {
           // remote
           if (token.accessToken && token.accessToken.length > 0) {
-              res.send(200, { 'username' : token.username });
+              res.send(200, { 'username' : token.username, 'authenticatedBy' : 'remote' });
               next();
               return;
           }
           // local
           userService.find({'username' : token.username}).then(function(user) {
-            res.send(200, { 'username' : user.username });
+            res.send(200, { 'username' : user.username, 'authenticatedBy' : 'local' });
             next();
           }, function(error) {
               res.send(401, { 'error': 'invalid user: ' + error});

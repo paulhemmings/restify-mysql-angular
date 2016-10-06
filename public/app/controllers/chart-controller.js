@@ -5,7 +5,7 @@ angular
     .controller('ChartController', ['$scope', '$rootScope', '$location', 'ChartingService', 'userService', 'queryService',
         function($scope, $rootScope, $location, chartingService, userService, queryService) {
 
-            $scope.users = [];
+            $scope.authenticatedUser = {};
             $scope.query = querySoql;
             $scope.records = [];
             $scope.recordKeys = [];
@@ -60,7 +60,7 @@ angular
                     $scope.chartData.length = 0;
                 }
             }
-            
+
             function handleErrorResponse(response) {
                 $scope.records = [
                     {
@@ -73,14 +73,16 @@ angular
             }
 
             function querySoql(soql) {
-                queryService.query(soql).then(handleQueryResponse, handleErrorResponse);
+                var target = $scope.authenticateUser.authenticatedBy == 'local' ? 'local' : 'remote';
+                queryService.query(target, soql).then(handleQueryResponse, handleErrorResponse);
             }
 
             function handleNotAuthenticated() {
                 $location.path('/login');
             }
 
-            function handleAuthenticated() {
+            function handleAuthenticated(response) {
+                $scope.authenticateUser = response.data;
             }
 
             function initialize() {

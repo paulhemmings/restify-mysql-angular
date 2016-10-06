@@ -8,12 +8,16 @@ exports.initialize = function(server, services) {
         authService = services.AuthenticationService,
         cookieService = services.CookieService,
         cryptoService = services.CryptoService,
-        salesforceService = services.SalesforceService;
+        salesforceService = services.SalesforceService,
+        databaseService = services.DatabaseService;
 
     server.post('/query', function(req, res, next) {
       authService.authenticateRequest(req, cookieService, cryptoService).then(function(token) {
-          console.log('query Sf: ' + req.body.soql);
-          salesforceService.query(token, req.body.soql).then(function(response) {
+
+          console.log('query ' + req.body.target + ': ' + req.body.soql);
+          var queryService = req.body.target == 'local' ? databaseService : salesforceService;
+
+          queryService.query(token, req.body.soql).then(function(response) {
             res.send(200, response);
             next();
           }, function(error) {
