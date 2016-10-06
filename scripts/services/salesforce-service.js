@@ -85,11 +85,12 @@
           }
 
           promise.resolve ({
-            username : username,
-            accessToken : conn.accessToken,
-            instanceUrl : conn.instanceUrl,
-            userId : userInfo.id,
-            organizationId : userInfo.organizationId
+            'username' : username,
+            'accessToken' : conn.accessToken,
+            'authenticationService' : 'salesforce',
+            'instanceUrl' : conn.instanceUrl,
+            'userId' : userInfo.id,
+            'organizationId' : userInfo.organizationId
           });
         });
         return promise;

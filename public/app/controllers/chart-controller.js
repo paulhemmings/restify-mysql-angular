@@ -12,10 +12,13 @@ angular
             $scope.selectKey = selectKey;
             $scope.selectedKeys = [];
             $scope.chartData = [];
+            $scope.queryTargets = queryTargets;
             $scope.isKeySelected = isKeySelected;
             $scope.isChartPopulated = isChartPopulated;
 
-
+            function queryTargets() {
+                return $scope.authenticatedUser.authenticatedBy || [];
+            }
 
             function isKeySelected(key) {
                 return $scope.selectedKeys.indexOf(key) !== -1;
@@ -72,8 +75,7 @@ angular
                 $scope.chartData.length = 0;
             }
 
-            function querySoql(soql) {
-                var target = $scope.authenticateUser.authenticatedBy == 'local' ? 'local' : 'remote';
+            function querySoql(target, soql) {
                 queryService.query(target, soql).then(handleQueryResponse, handleErrorResponse);
             }
 
@@ -82,7 +84,7 @@ angular
             }
 
             function handleAuthenticated(response) {
-                $scope.authenticateUser = response.data;
+                $scope.authenticatedUser = response.data;
             }
 
             function initialize() {

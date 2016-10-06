@@ -10,6 +10,7 @@
     }
     #fire_query_button, ul.selected-keys-list {
       display: inline-block;
+      margin-right: 0.5em;
     }
     ul.selected-keys-list li {
       list-style: none;
@@ -30,8 +31,8 @@
         <div>
             <textarea class='querytextarea' paddingTop='10' paddingBottom='20' auto-size="" min-height="300" ng-model="soql"></textarea>
             <div>
-              <button id="fire_query_button" ng-click="query(soql)">
-                <span class="button_text">Query</span>
+              <button ng-repeat="target in queryTargets()" id="fire_query_button" ng-click="query(target, soql)">
+                <span class="button_text">Query {{target}}</span>
               </button>
               <ul class="selected-keys-list">
                   <li ng-repeat="selectedKey in recordKeys">
