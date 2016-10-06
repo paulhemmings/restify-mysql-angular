@@ -7,11 +7,12 @@ angular
 
             $scope.options = [];
             $scope.isSelected = isSelected;
+            $scope.userName = '';
 
-            function buildOptions(authenticated) {
+            function buildOptions(username) {
                 $scope.options.length = 0;
                 $scope.options.push({ key:"Home", url:"#/welcome", selected : false });
-                if (authenticated) {
+                if ($scope.userName.length > 0) {
                   $scope.options.push({ key:"Logout", url:"#/logout", selected : false });
                 } else {
                   $scope.options.push({ key:"Login", url:"#/login", selected : false });
@@ -23,11 +24,13 @@ angular
             }
 
             function handleNotAuthenticated() {
-                return buildOptions(false);
+                $scope.userName = '';
+                return buildOptions();
             }
 
-            function handleAuthenticated() {
-                return buildOptions(true);
+            function handleAuthenticated(response) {
+                $scope.userName = response.data.username || '';
+                return buildOptions();
             }
 
             function initialize() {
