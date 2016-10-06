@@ -47,7 +47,7 @@
     exports.find = findUser;
 
     exports.login = function(databaseService, cryptoService, username, password) {
-      return findUser({
+      return findUser(databaseService, {
           'username': username,
           'password': cryptoService.encrypt(password)
         });
