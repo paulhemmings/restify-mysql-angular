@@ -29,6 +29,7 @@ exports.initialize = function(server, services) {
 
   server.post('/user/login', function(req, res, next) {
     userService.login(databaseService, cryptoService, req.body.username, req.body.password).then(function(user) {
+        console.log('logged in user: ' + user);
         authService.authenticateResponse(res, { 'username' : user.username }, cookieService, cryptoService);
         res.send(200, { 'username' : user.username, 'authenticatedBy' : ['local'] });
         next();
@@ -84,7 +85,7 @@ exports.initialize = function(server, services) {
           }
           // local
           userService.find(databaseService, {'username' : token.username}).then(function(user) {
-            res.send(200, { 'username' : user.username, 'authenticatedBy' : ['local'] });
+            res.send(200, { 'username' : user[0].username, 'authenticatedBy' : ['local'] });
             next();
           }, function(error) {
               res.send(401, { 'error': 'invalid user: ' + error});

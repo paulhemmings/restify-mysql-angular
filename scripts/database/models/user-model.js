@@ -19,9 +19,9 @@ exports.initialize = function(sequelize, models) {
             type: Sequelize.STRING,
             field: 'password'
         },
-        seed: {
+        salt: {
             type: Sequelize.STRING,
-            field: 'seed'
+            field: 'salt'
         }
     }, {
         freezeTableName: true // Model tableName will be the same as the model name

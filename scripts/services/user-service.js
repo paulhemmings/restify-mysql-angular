@@ -30,16 +30,10 @@
        	 databaseService.models.User.findAll({
              where : filter
          }).then(function(users) {
-
-            console.log('returned user ' + JSON.stringify(users));
-
              if (!users || users.length === 0) {
                  return promise.reject ('no user found');
              }
-
-             console.log('found users: ' + users.length);
-             promise.resolve (users[0]);
-
+             promise.resolve (users);
         });
         return promise;
      }
@@ -47,21 +41,36 @@
     exports.find = findUser;
 
     exports.login = function(databaseService, cryptoService, username, password) {
-      return findUser(databaseService, {
-          'username': username,
-          'password': cryptoService.encrypt(password)
+        var promise = new Promise();
+        findUser(databaseService, {
+            'username': username
+        }).then(function(users) {
+            if (!users || users.length === 0) {
+                promise.reject ('no user found');
+            } else if (users[0].password !== cryptoService.encryptWithSalt(password, users[0].salt).passwordHash ) {
+                promise.reject ('user found - invalid password');
+            } else {
+                promise.resolve (users[0]);
+            }
+        }, function(error) {
+            promise.reject ('no user found');
         });
+        return promise;
+      //
+    //   return findUser(databaseService, {
+    //       'username': username,
+    //       'password': cryptoService.encrypt(password)
+    //     });
     };
 
     exports.all = function(databaseService) {
       	return databaseService.models.User.findAll();
     };
 
-    exports.persist = function(cryptoService, model) {
+    exports.persist = function(databaseService, cryptoService, model) {
         var promise = new Promise();
 
         // check if existing
-
         if (model._id) {
             promise.reject ('cannot yet edit existing user');
             return promise;
@@ -69,12 +78,15 @@
 
         // encrypt the password (if local and not via remote authentication)
         if (model.password) {
-            model.password = cryptoService.encrypt(model.password);
+            var passwordAndSalt = cryptoService.encryptWithSalt(model.password);
+            model.password = passwordAndSalt.passwordHash;
+            model.salt = passwordAndSalt.salt;
         }
 
         // persist
-        databaseService.models.User.create(model).then(function(jane) {
-            promise.resolve(jane.get({
+        console.log('storing new user: ' + JSON.stringify(model));
+        databaseService.models.User.create(model).then(function(persisted) {
+            promise.resolve(persisted.get({
                 plain: true
             }));
         });
