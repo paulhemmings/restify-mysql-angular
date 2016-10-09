@@ -9,6 +9,12 @@
     "bower": "1.4.1"
   },
   "scripts": {
+    "start": "node ./scripts",
+    "monitor": "nodemon ./scripts",
+    "deploy": "gcloud app deploy app.yaml",
+    "test": "mocha test/index.js -t 30000"
+  },
+  "scripts": {
     "postinstall": "bower install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
