@@ -8,7 +8,7 @@ CREATE TABLE `UserRecord` (
   `Age` int(11) DEFAULT NULL,
   `Username` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `Password` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `Seed` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `Salt` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 

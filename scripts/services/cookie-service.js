@@ -7,6 +7,9 @@
 
 exports.name = 'CookieService';
 
+exports.initialize = function() {
+};
+
 exports.readCookie = function(request, name) {
     var cookies = request.cookies;
     return cookies ? cookies[name] : undefined;

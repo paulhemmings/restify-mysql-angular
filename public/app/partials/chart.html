@@ -21,6 +21,9 @@
       background-color: #abc;
       color: #fee;
     }
+    .row {
+        margin-bottom: 1em;
+    }
 </style>
 
 
@@ -34,16 +37,20 @@
               <button ng-repeat="target in queryTargets()" id="fire_query_button" ng-click="query(target, soql)">
                 <span class="button_text">Query {{target}}</span>
               </button>
-              <ul class="selected-keys-list">
-                  <li ng-repeat="selectedKey in recordKeys">
-                      <a href="" ng-click="selectKey(selectedKey)" ng-class="isKeySelected(selectedKey) ? 'selected' : ''">
-                          {{selectedKey}}
-                      </a>
-                  </li>
-              </ul>
             </div>
         </div>
     </div>
+    <!--
+    <div class="row">
+        <ul class="selected-keys-list">
+            <li ng-repeat="selectedKey in recordKeys">
+                <a href="" ng-click="selectKey(selectedKey)" ng-class="isKeySelected(selectedKey) ? 'selected' : ''">
+                    {{selectedKey}}
+                </a>
+            </li>
+        </ul>
+    </div>
+    -->
     <div class="row" ng-show="isChartPopulated()">
         <svg class="chart"></svg>
     </div>

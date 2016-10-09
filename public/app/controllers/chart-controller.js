@@ -55,10 +55,15 @@ angular
             }
 
             function handleQueryResponse(response) {
-                $scope.records = response.data.records;
+                $scope.records = (response.data.records || response.data);
                 if ($scope.records && $scope.records.length > 0) {
                     $scope.recordKeys = Object.keys($scope.records[0]);
-                    $scope.recordKeys.splice($scope.recordKeys.indexOf('attributes'), 1);
+
+                    var index = $scope.recordKeys.indexOf('attributes');
+                    if (index !== -1) {
+                        $scope.recordKeys.splice(index, 1);
+                    }
+
                     $scope.selectedKeys.length = 0;
                     $scope.chartData.length = 0;
                 }

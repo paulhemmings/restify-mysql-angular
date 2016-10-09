@@ -8,7 +8,8 @@ exports.initialize = function(server, services) {
       authService = services.AuthenticationService,
       cookieService = services.CookieService,
       cryptoService = services.CryptoService,
-      salesforceService = services.SalesforceService;
+      salesforceService = services.SalesforceService,
+      databaseService = services.DatabaseService;
 
 
   server.post('user/authenticate', function(req, res, next) {
@@ -27,7 +28,8 @@ exports.initialize = function(server, services) {
   // includes authentication token in response (as cookie)
 
   server.post('/user/login', function(req, res, next) {
-    userService.login(cryptoService, req.body.username, req.body.password).then(function(user) {
+    userService.login(databaseService, cryptoService, req.body.username, req.body.password).then(function(user) {
+        console.log('logged in user: ' + user);
         authService.authenticateResponse(res, { 'username' : user.username }, cookieService, cryptoService);
         res.send(200, { 'username' : user.username, 'authenticatedBy' : ['local'] });
         next();
@@ -43,7 +45,7 @@ exports.initialize = function(server, services) {
   // includes authentication token in response (as cookie)
 
   server.post('/user', function(req, res, next) {
-    userService.persist(cryptoService, req.body).then(function(user) {
+    userService.persist(databaseService, cryptoService, req.body).then(function(user) {
         authService.authenticateResponse(res, { 'username' : user.username }, cookieService, cryptoService);
         res.send(200, { 'username' : user.username });
         next();
@@ -54,7 +56,7 @@ exports.initialize = function(server, services) {
   });
 
   server.get('/users', function(req, res, next) {
-    userService.all().then(function(users) {
+    userService.all(databaseService).then(function(users) {
       res.send(200, { 'users' : users.map(function(user) {
             return {
                 name : user.name,
@@ -82,8 +84,8 @@ exports.initialize = function(server, services) {
               return;
           }
           // local
-          userService.find({'username' : token.username}).then(function(user) {
-            res.send(200, { 'username' : user.username, 'authenticatedBy' : ['local'] });
+          userService.find(databaseService, {'username' : token.username}).then(function(user) {
+            res.send(200, { 'username' : user[0].username, 'authenticatedBy' : ['local'] });
             next();
           }, function(error) {
               res.send(401, { 'error': 'invalid user: ' + error});

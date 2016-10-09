@@ -16,7 +16,7 @@ exports.initialize = function(server, services) {
 
           console.log('query ' + req.body.target + ': ' + req.body.soql);
           var queryService = req.body.target == 'local' ? databaseService : salesforceService;
-
+          console.log('service: ', queryService);
           queryService.query(token, req.body.soql).then(function(response) {
             res.send(200, response);
             next();

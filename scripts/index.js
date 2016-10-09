@@ -28,7 +28,7 @@ server.get('/', restify.serveStatic({
 
 // bootstrap database and models
 
-var database = require( __dirname + '/database/database');
+// var database = require( __dirname + '/database/database');
 
 // bootstrap services
 
@@ -37,7 +37,7 @@ var services = {};
 fs.readdirSync(modelsPath).forEach(function(file) {
   	console.log('load service ' + file);
     var service = require(modelsPath + '/' + file);
-    // service.initialize(database);
+    service.initialize();
     services[service.name] = service;
 });
 
