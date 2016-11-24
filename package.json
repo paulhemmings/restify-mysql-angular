@@ -28,6 +28,7 @@
     "mysql": "^2.9.0",
     "node-promise": "^0.5.12",
     "node-salesforce": "^0.8.0",
+    "request": "^2.79.0",
     "restify": "^4.0.3",
     "restify-cookies": "^0.2.2",
     "salesforce-api": "^0.3.11",

@@ -4,20 +4,15 @@
 
 (function(exports) {
 
+    var http = require('http');
+    var request = require('request');
     var sf = require('node-salesforce');
-    var sfApi = require("salesforce-api");
     var Promise = require('node-promise').Promise;
+
     var conn = new sf.Connection({
       // you can change loginUrl to connect to sandbox or prerelease env.
       loginUrl : 'https://test.salesforce.com'
     });
-
-    var buildSessionInfo = function(accessToken, instanceUrl) {
-        return {
-          	instanceUrl : instanceUrl,
-          	accessToken : accessToken
-        };
-    };
 
     exports.name = 'SalesforceService';
 
@@ -39,32 +34,20 @@
     // }
 
     exports.query = function(token, soql) {
-        var promise = new Promise();
-        var records = [];
-        conn.query(soql, function(err, result) {
-            if (err) {
-                promise.reject ('invalid query: ' + err);
-                return promise;
-            }
-            // console.log("total : " + result.totalSize);
-            // console.log("fetched : " + result.records.length);
-            promise.resolve (result);
-        });
-        return promise;
 
-        var query = {
-            credentials : buildSessionInfo(token.accessToken, token.instanceUrl),
-            SOSQL: query
-        };
         var promise = new Promise();
-        var api = new sfApi();
-        api.Query(query, function(err, result) {
-            if (err) {
-                promise.reject ('invalid query: ' + err);
-                return promise;
+        var fullUrl = token.instanceUrl + '/services/data/v20.0/query/?q=' + encodeURIComponent(soql);
+        var callback = function (error, response, body) {
+            if (error) {
+                console.log(error);
+                return promise.reject(error);
             }
-            promise.resolve (result);
-        });
+            promise.resolve(JSON.parse(body));
+        }
+
+        console.log('query: ' + fullUrl);
+        request.get(fullUrl, callback).auth(null, null, true, token.accessToken);
+
         return promise;
     }
 
