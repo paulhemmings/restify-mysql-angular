@@ -52,6 +52,7 @@ fs.readdirSync(modelsPath).forEach(function(file) {
 
 // start the server listening
 
-server.listen(8080, function() {
-    console.log('%s listening at %s', server.name, server.url);
+server.listen(process.env.PORT || 8080, function() {
+    var port = server.address().port;
+    console.log('%s listening at %s:%s', server.name, server.url, port);
 });
